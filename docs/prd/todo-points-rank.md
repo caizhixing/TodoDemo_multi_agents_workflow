@@ -139,3 +139,7 @@ class TodoListViewModel(repository: TodoRepository) : ViewModel() {
 
 默认按 skill references/status-protocol.md 执行，无额外里程碑。
 特记：issue 3 不参与 wave 1 fan-out；主 agent 在 1+2 合并后派发，派发前将 issue 3 label 保持 status/todo。
+
+## 9. 变更记录（frozen 后）
+
+- **2026-10-30**：任务 3 行为清单增补行为 3.8（VM 捕获 repository 异常：isBusy 复位、uiState 保持上一有效值、不崩溃）。来源：PR #5 评审第 1 轮非阻断建议（冻结契约无错误通道，Room 异常上抛给 VM 更合理，兜底责任落在 UI 层）。冻结接口（第 2 节）未动；仅影响 issue #3，已在派发前同步其契约。
