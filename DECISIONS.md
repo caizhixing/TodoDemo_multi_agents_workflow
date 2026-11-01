@@ -32,7 +32,14 @@
 
 ## 仓库可见性
 
-- **日期**: 2026-10-30
+- **日期**: 2026-10-30 提出 / 2026-11-01 定案
 - **背景**: skill 红线 19 要求仓库私有；本仓创建为 PUBLIC。
-- **方案**: demo 无用户数据，PRD/issue/PR 内容已约束不携带用户数据，先按 PUBLIC 继续；已向用户提示，是否转私有由用户定。
-- **被否备选**: 未经确认直接 `gh repo edit --visibility private`（外向动作，不代拍）。
+- **方案**: 2026-11-01 用户拍板：**保持 PUBLIC**（demo 无用户数据，PRD/issue/PR 全程未携带用户数据）。
+- **被否备选**: 转 PRIVATE（用户否决）。
+
+## 多 agent 流程首跑完成（todo-points-rank）
+
+- **日期**: 2026-11-01
+- **背景**: multi-agent-pr-flow skill 首次完整执行（PRD → 拆单 → 两波 fan-out → 跨模型评审 → 合并 → 集成门禁）。
+- **方案**: 三单（#1 域引擎 / #2 数据层 / #3 UI 层）全部一轮评审 pass 并合并（PR #4/#5/#6，rebase 线性历史）；集成门禁 `--offline :app:assembleDebug :app:testDebugUnitTest` 绿（33 测试 0 失败，APK 产出）。用户拍板接受交付；**三条 feat/issue-* 远程分支保留**（用户决定，审计留痕）；worker worktree 已清理。
+- **被否备选**: deepseek-v4-pro 作为 workflow 子 agent 评审模型（思考模式协议不兼容，`content[].thinking` 必须回传，provider 判 invalid_request_error；本轮 PR #6 评审改用 k3$max 完成）。工具坑：`AmendWorkflow` 不携带 args，参数化脚本改版必须走 `CreateWorkflow` 重新提交（review.dw.ts 已加空参数硬失败保护）。
